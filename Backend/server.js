@@ -1,24 +1,41 @@
-// Express + API endPoints + HTTP Methods
+const express = require('express');
+const config = require('./config/config');
+const userRoutes = require('./routes/user.routes');
+const mongoose = require('mongoose');
+const authRoutes = require('./routes/auth.routes');
+const postRoutes = require('./routes/post.routes');
 
-const express = require('express')
-const {Users,add} = require('./models/user.models')
-const app = express()
-const port = 3000
+const app = express();
 
-//GET Method to get information from the server
-app.get('/users', (req, res) => {
-  res.send({user:Users, message : "Sucsessfully connected "}).status(200)
-})
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/', userRoutes);
+app.use('/', authRoutes);
+app.use('/', postRoutes);
 
+mongoose.set('strictQuery', false);
+mongoose
+  .connect(config.mongoURI)
+  .then(() => {
+    console.log('Database Connected');
+  })
+  .catch((e) => {
+    console.log(e);
+  });
 
-//POST Method to crete data in server
-app.post('/users',(req,res) => {
-    console.log(req.body)
-    add(req.body)
-})
-// to check above req work go to Postman and type the url there
+// app.get('/hello', (req, res) => {
+//   res.status(200).send({ message: `Hello ${req.body.name}` });
+// });
+// app.get('/hello/:user', (req, res) => {
+//   console.log(req.params.user);
+//   console.log(req.query);
+//   res.status(200).send({ message: `Hello ${req.body.name}` });
+// });
 
+// app.post('/hello', (req, res) => {
+//   res.status(200).send(req.body);
+// });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+app.listen(config.PORT, () => {
+  console.log(`Server is running in ${config.PORT}`);
+});

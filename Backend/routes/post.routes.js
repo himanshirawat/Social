@@ -1,22 +1,12 @@
-// const express = require('express');
-// const postCtrl = require('../controllers/post.controller');
-// const authMiddleware = require('../middlewares/auth.middleware');
-
-// const router = express.Router();
-
-// router.post('/api/posts/new/:userId', authMiddleware.verifyToken, postCtrl.createPost);
-
-// module.exports = router;
-
 const express = require('express');
 const postCtrl = require('../controller/post.controller');
 const authMiddleware = require('../middleware/auth.middleware');
+ 
+const router = express.Router(); 
 
-const router = express.Router();
+router.post('/api/posts/new/:userId', authMiddleware.verifyToken, postCtrl.createPost);
 
-router.post('/api/posts/new/:userId', authMiddleware.verfyToken, postCtrl.createPost);
-
-router.route('/api/posts/photo/:postId').get(postCtrl.photo);
+router.route('/api/posts/photo/:photoId').get(postCtrl.photo);
 
 router.route('/api/posts/by/:userId').get(authMiddleware.verifyToken, postCtrl.listByUser);
 

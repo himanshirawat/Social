@@ -11,11 +11,10 @@ router.route('/api/users').get(userCtrl.getAllUsers);
 router.get('/api/users/photo/:userId');
 router.get('/api/photo/defaultphoto');
 
-router.put('/api/users/follow', authMiddleware.verfyToken, userCtrl.addFollowing, userCtrl.addFollower);
-router.put('/api/users/unfollow', authMiddleware.verfyToken);
+router.put('/api/users/follow', authMiddleware.verifyToken, userCtrl.addFollowing, userCtrl.addFollower);
 
-router.route('/api/users/:userid').get(authMiddleware.verfyToken, userCtrl.getUserByID);
-router.route('/api/users/:userid').put(authMiddleware.verfyToken, userCtrl.updateUser);
-router.route('/api/users/:userid').delete(authMiddleware.verfyToken, userCtrl.deleteUser);
+router.route('/api/users/:userId').get(authMiddleware.verifyToken, userCtrl.getUserByID);
+router.route('/api/users/:userId').put(authMiddleware.verifyToken, userCtrl.updateUser);
+router.route('/api/users/:userId').delete(authMiddleware.verifyToken, userCtrl.deleteUser);
 
 module.exports = router;

@@ -113,4 +113,6 @@ const addFollower = async (req, res) => {
     });
 };
 
+
+
 module.exports = { createUser, getAllUsers, getUserByID, updateUser, deleteUser, addFollowing, addFollower };

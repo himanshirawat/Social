@@ -7,7 +7,7 @@ const createPost = (req, res) => {
   form.keepExtensions = true;
   form.parse(req, async (err, fields, files) => {
     if (err) {
-      return res.status(400).send({ message: 'Image can;t be uploaded' });
+      return res.status(400).send({ message: 'Image cannot be uploaded' });
     }
 
     let post = new PostModel(fields);
@@ -16,8 +16,7 @@ const createPost = (req, res) => {
       post.photo.data = fs.readFileSync(files.photo.filepath);
       post.photo.contentType = files.photo.type;
     }
-    post
-      .save()
+    post.save()
       .then((data) => {
         if (!data) {
           return res.send({ message: 'Could not upload the image' });
